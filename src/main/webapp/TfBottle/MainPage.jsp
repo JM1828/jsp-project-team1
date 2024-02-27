@@ -32,36 +32,20 @@
   </ul>
 </nav>
 <div class="mainpic">
-  <ul class="mainpicul">
-    <li>
-      <%--
-                  <h1 class="mainmsg">편지 한통으로 <br> &nbsp;&nbsp;&nbsp;시작하는 하루</h1>
-      --%>
-    </li>
-  </ul>
+
 
 <%
-  boolean canReceiveLetter = true; //캔 리시브 레터 (편지를읽을수있음)변수선언 값은 true
-  Cookie[] cookies = request.getCookies(); // 쿠키 배열을 생성함 이름은 cookies로 생성된 쿠키들을 전부 배열에담음
+  boolean canReceiveLetter = true; //편지를 읽을 변수선언 값은 true
+  Cookie[] cookies = request.getCookies(); // 쿠키 배열을 생성함 이름은 cookies
   if (cookies != null) {  //if 쿠키가 있으면
-    for (Cookie cookie : cookies) { //for문으로 cookie에 cookies를 하나씩 담는다
-      if (cookie.getName().equals("receiveCooldown")) { //담는와중에 쿠키의 이름이 "reciveCooldown" 인 쿠키가 나왔을경우!
-        canReceiveLetter = false; // 캔 리시브 레터 (편지읽을수있는) 변수의값이 false가된다
+    for (Cookie cookie : cookies) { //for문으로 cookies에 cookie를 하나씩 모두 담는다
+      if (cookie.getName().equals("receiveCooldown")) { //담는와중에 쿠키의 이름이 "reciveCooldown" 인 쿠키가 발견되면
+        canReceiveLetter = false; // 편지를 읽을 변수의값이 false가된다
         break; // 즉 reciveCooldown 이라는 쿠키를 찾을때까지 계속 무한반복(for문)이 돈다
       }
     }
   }
 %>
-<script>
-  function createCookie() {
-    // 쿠키 생성
-    var date = new Date();
-    date.setTime(date.getTime() + (24 * 60 * 60 * 1000)); // 24시간
-    var expires = "expires=" + date.toUTCString();
-    document.cookie = "receiveCooldown=true; " + expires + "; path=/";
-  } // 클릭을했을때 "reciveCooldown"이라는 이름의 쿠키를 만드는 함수(자바스크립트)
-  </script>
-
   <div class="buttonwrap">
     <ul>
       <li>
@@ -75,8 +59,7 @@
       <% if (canReceiveLetter) { %>
       <li>
         <form action="/mvcboard/viewController.do" method="post">
-          <button class="picbutton" type="submit" name="action" value="receive"
-                  onclick="createCookie()">
+          <button class="picbutton" type="submit" name="action" value="receive">
             <img src="/img/realget.png">
           </button>
         </form>

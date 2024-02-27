@@ -3,6 +3,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    Cookie cookie = new Cookie("receiveCooldown", "");
+    cookie.setMaxAge(86400); // 쿠키의 유효 시간 설정 (초 단위, 여기서는 24시간)
+    cookie.setPath("/TfBottle/MainPage.jsp");
+    response.addCookie(cookie); // 쿠키를 응답에 추가
+%>
 <html>
 <head>
     <link rel="stylesheet" href="/TfCSS/LetterView.css">

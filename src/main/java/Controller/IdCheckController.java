@@ -23,13 +23,12 @@ public class IdCheckController extends HttpServlet {
             throws ServletException, IOException {
 
             UserDTO dto = new UserDTO();
-//             String userId = req.getParameter("userId");
         String id = req.getParameter("id");
-        System.out.println("받아온 id 확인" + id);
         dto.setUser_id(id);
+
         UserDAO dao = new UserDAO();
         boolean result = dao.check(dto);
-        System.out.println("result" + result);
+
 
         PrintWriter out = resp.getWriter();
         out.print(result);
