@@ -15,7 +15,7 @@ public class UserDAO extends DBConnPool {
         UserDTO dto = new UserDTO();
 
         try {
-            String query = " SELECT * FROM scott.users WHERE user_id = ? AND password = ?";
+            String query = " SELECT * FROM c##pro.users WHERE user_id = ? AND password = ?";
             psmt = con.prepareStatement(query);
             psmt.setString(1, userId);
             psmt.setString(2, password);
@@ -41,7 +41,7 @@ public class UserDAO extends DBConnPool {
         int result = 0;
 
         try {
-            String query = " INSERT INTO scott.users(user_id, name, password, country, email) VALUES (?, ?, ?, ?, ?)";
+            String query = " INSERT INTO c##pro.users(user_id, name, password, country, email) VALUES (?, ?, ?, ?, ?)";
             psmt = con.prepareStatement(query);
             psmt.setString(1, dto.getUser_id());
             psmt.setString(2, dto.getName());
@@ -65,7 +65,7 @@ public class UserDAO extends DBConnPool {
         String id = "";
 
         try {
-            String query = " SELECT user_id FROM scott.users WHERE name=? AND email=?";
+            String query = " SELECT user_id FROM c##pro.users WHERE name=? AND email=?";
             psmt = con.prepareStatement(query);
             psmt.setString(1, name);
             psmt.setString(2, email);
@@ -85,7 +85,7 @@ public class UserDAO extends DBConnPool {
     public boolean check(UserDTO dto) {
         boolean result = false;
 
-        String sql = "SELECT user_id FROM scott.users WHERE user_id=?";
+        String sql = "SELECT user_id FROM c##pro.users WHERE user_id=?";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, dto.getUser_id());

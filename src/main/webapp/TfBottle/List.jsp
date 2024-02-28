@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/TfCSS/List.css">
     <style>
-        a{text-decoration: none;}
+        a {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -25,80 +27,82 @@
         <%--로그인 상태에 따라--%>
         <% if (session.getAttribute("user_id") == null) { %>
         <li><a href="../TfBottle/Login.jsp">로그인</a></li>
-        <% }else { %>
+        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
+        <% } else { %>
         <li><a href="../TfBottle/Logout.jsp">로그아웃</a></li>
         <% } %>
-        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
     </ul>
 </nav>
-
-<div class="list">
-<h2 class="listtitle">편지 목록</h2>
-<%--검색 폼--%>
-    <form method="get">
-        <table border="1" width="90%">
-            <tr>
-                <td align="center">
-                    <select name="searchField">
-                        <option value="title">제목</option>
-                    </select>
-                    <input type="text" name="searchWord">
-                    <input type="submit" value="검색">
-                </td>
-                <td>
-<%--
-                    <form action="/mvcboard/write.do" method="get">
---%>
-                        <button class="writerbutton"><a class="abutton" href="/mvcboard/write.do" methods="get">편지 쓰기</a></button>
-                    <%--</form>--%>
-                </td>
-            </tr>
-        </table>
-    </form>
-
-    <%--게시물 목록 테이블--%>
-    <table border="1" width="90%">
-        <tr>
-            <th width="10%">번호</th>
-            <th width="*">제목</th>
-            <th width="15%">아이디</th>
-            <th width="15%">작성일</th>
-        </tr>
-        <c:choose>
-            <c:when test="${empty boardList}"><%--게시글이 없을때--%>
+<div class="write" style="position: relative; z-index: 10;">
+    <div class="list">
+        <h2 class="listtitle">편지 목록</h2>
+        <%--검색 폼--%>
+        <form method="get">
+            <table border="1" width="90%">
                 <tr>
-                    <td colspan="4" align="center">
-                        등록된 게시물이 없습니다.
+                    <td align="center">
+                        <select name="searchField">
+                            <option value="title">제목</option>
+                        </select>
+                        <input type="text" name="searchWord">
+                        <input type="submit" value="검색">
+                    </td>
+                    <td>
+                        <%--
+                                            <form action="/mvcboard/write.do" method="get">
+                        --%>
+                        <button class="writerbutton"><a class="abutton" href="/mvcboard/write.do" methods="get">편지
+                            쓰기</a></button>
+                        <%--</form>--%>
                     </td>
                 </tr>
-            </c:when>
-            <c:otherwise> <%--게시글이 있을때--%>
-                <c:forEach items="${boardList}" var="dto" varStatus="loop">
-                    <%-- 현재 페이지의 목록에서 각 항목의 역순 번호를 계산하는 데 사용 --%>
-                    <tr align="center">
-                        <td>${map.totalCount - (((map.pageNum-1)*map.pageSize) + loop.index)}</td>
-                        <td align="left">
-                            <%-- 게시글 제목 클릭스 viewServlet.do로 매핑 --%>
-                            <a href="../mvcboard/viewServlet.do?board_id=${dto.board_id}">${dto.title}</a>
-                        </td>
-                        <td>${dto.user_id}</td>
-                        <td>${dto.post_date}</td>
-                    </tr>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
+            </table>
+        </form>
 
-    </table>
-    <div class="paging">
-    <table class="paging" border="1" width="90%">
-        <tr>
-            <td>
-                ${map.pagingImg}
-            </td>
-        </tr>
-    </table>
+        <%--게시물 목록 테이블--%>
+        <table border="1" width="90%">
+            <tr>
+                <th width="10%">번호</th>
+                <th width="*">제목</th>
+                <th width="15%">아이디</th>
+                <th width="15%">작성일</th>
+            </tr>
+            <c:choose>
+                <c:when test="${empty boardList}"><%--게시글이 없을때--%>
+                    <tr>
+                        <td colspan="4" align="center">
+                            등록된 게시물이 없습니다.
+                        </td>
+                    </tr>
+                </c:when>
+                <c:otherwise> <%--게시글이 있을때--%>
+                    <c:forEach items="${boardList}" var="dto" varStatus="loop">
+                        <%-- 현재 페이지의 목록에서 각 항목의 역순 번호를 계산하는 데 사용 --%>
+                        <tr align="center">
+                            <td>${map.totalCount - (((map.pageNum-1)*map.pageSize) + loop.index)}</td>
+                            <td align="left">
+                                    <%-- 게시글 제목 클릭스 viewServlet.do로 매핑 --%>
+                                <a href="../mvcboard/viewServlet.do?board_id=${dto.board_id}">${dto.title}</a>
+                            </td>
+                            <td>${dto.user_id}</td>
+                            <td>${dto.post_date}</td>
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+
+        </table>
+        <div class="paging">
+            <table class="paging" border="1" width="90%">
+                <tr>
+                    <td>
+                        ${map.pagingImg}
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    </div>
+</div>
 <footer>
     <div class="footer-wrapper">
         <div class="footer-section">

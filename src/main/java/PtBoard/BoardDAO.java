@@ -17,10 +17,10 @@ public class BoardDAO extends DBConnPool {
         int result = 0;
         //DB에 BOARD테이블에 맞춰서 작성
         try {
-            String query = " INSERT INTO scott.board ( "
+            String query = " INSERT INTO c##pro.board ( "
                     + " board_id, title, contents, user_id, post_date)"
                     + " VALUES ("
-                    + " scott.seq_bottle_num.nextval, ?,?,?,sysdate)";
+                    + " c##pro.seq_bottle_num.nextval, ?,?,?,sysdate)";
 
             psmt = con.prepareStatement(query);
             psmt.setString(1, dto.getTitle());
@@ -42,7 +42,7 @@ public class BoardDAO extends DBConnPool {
     // 랜덤 페이지
     public BoardDTO selectRandomPage() {
         BoardDTO dto = new BoardDTO();
-        String query = "SELECT * FROM (SELECT * FROM scott.BOARD order by DBMS_RANDOM.RANDOM) WHERE rownum < 2";
+        String query = "SELECT * FROM (SELECT * FROM c##pro.BOARD order by DBMS_RANDOM.RANDOM) WHERE rownum < 2";
 
         try {
             psmt = con.prepareStatement(query);
@@ -67,7 +67,7 @@ public class BoardDAO extends DBConnPool {
     public int selectCount(Map<String, Object> map) {
         int totalCount = 0;
 
-        String query = "SELECT COUNT(*) FROM scott.board";
+        String query = "SELECT COUNT(*) FROM c##pro.board";
         if (map.get("searchWord") != null) {
             query += " WHERE " + map.get("searchField") + " "
                     + " LIKE '%" + map.get("searchWord") + "%'";
@@ -95,7 +95,7 @@ public class BoardDAO extends DBConnPool {
         // 쿼리문 템플릿 (1)
         String query = " SELECT * FROM ( "
                 + " SELECT Tb.*, ROWNUM rNum FROM ("
-                + " SELECT * FROM scott.BOARD ";
+                + " SELECT * FROM c##pro.BOARD ";
 
         // 검색 조건 추가 (2)
         if (map.get("searchWord") != null) {
@@ -141,8 +141,8 @@ public class BoardDAO extends DBConnPool {
 
         try {
             String query = "SELECT B.* , U.name"
-                    + " FROM scott.board B"
-                    + " INNER JOIN scott.users U"
+                    + " FROM c##pro.board B"
+                    + " INNER JOIN c##pro.users U"
                     + " ON B.user_id = U.user_id"
                     + " WHERE board_id = ?";
 
@@ -169,7 +169,7 @@ public class BoardDAO extends DBConnPool {
     public int updateEdit(BoardDTO dto) {
         int result = 0;
 
-        String query = " UPDATE scott.board"
+        String query = " UPDATE c##pro.board"
                 + " SET title = ? , contents = ?"
                 + " WHERE board_id = ?";
 
@@ -192,7 +192,7 @@ public class BoardDAO extends DBConnPool {
     public int deletePost(String board_id) {
         int result = 0;
 
-        String query = " DELETE FROM scott.board WHERE board_id = ?";
+        String query = " DELETE FROM c##pro.board WHERE board_id = ?";
 
         try {
             psmt = con.prepareStatement(query);

@@ -22,10 +22,10 @@
         <%--로그인 상태에 따라--%>
         <% if (session.getAttribute("user_id") == null) { %>
         <li><a href="../TfBottle/Login.jsp">로그인</a></li>
-        <% }else { %>
+        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
+        <% } else { %>
         <li><a href="../TfBottle/Logout.jsp">로그아웃</a></li>
         <% } %>
-        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
     </ul>
 </nav>
 <%
@@ -53,7 +53,7 @@
 
     // 페이지가 로드될떄 모든 쿠키를 확인하고 user_id 라는 이름에 쿠키가 있을경우
     // 체크박스를 체크하고 아이디 입력 필드에 쿠키의 값을 채움
-    window.onload = function() {
+    window.onload = function () {
         var cookies = document.cookie.split("; ");
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i].split("=");
@@ -64,7 +64,7 @@
             }
         }
         // 체크박스 해제되었을 경우 user_id 입력 필드의 값이 비워진다.
-        document.getElementById("remember-check").addEventListener("change", function() {
+        document.getElementById("remember-check").addEventListener("change", function () {
             if (!this.checked) {
                 // 쿠키는 만료 날짜가 지나면 자동 삭제
                 // 따라서 쿠키를 삭제하며면 만료 날짜를 과거로 설정하면됨

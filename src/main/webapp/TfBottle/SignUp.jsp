@@ -21,10 +21,10 @@
         <li><a href="../TfBottle/MainPage.jsp">Home</a></li>
         <% if (session.getAttribute("user_id") == null) { %>
         <li><a href="../TfBottle/Login.jsp">로그인</a></li>
-        <% }else { %>
+        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
+        <% } else { %>
         <li><a href="../TfBottle/Logout.jsp">로그아웃</a></li>
         <% } %>
-        <li><a href="../TfBottle/SignUp.jsp">회원가입</a></li>
     </ul>
 </nav>
 <section>
@@ -36,7 +36,7 @@
         <label for="id" id="label_id">아이디:</label>
         <input type="text" id="id" name="id"><br>
 
-        <button type="button"  onclick="idcheck()">중복확인</button>
+        <button type="button" onclick="idcheck()">중복확인</button>
         <input type="hidden" id="check" value="unchecked"/>
 
         <label for="password">비밀번호:</label>
@@ -56,12 +56,13 @@
         </select>
 
         <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" ><br>
+        <input type="email" id="email" name="email"><br>
 
         <input type="button" value="회원가입하기" onclick="sendMember()">
         <input type="hidden" name="command" value="addMember">
     </form>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </section>
 
 <footer>
@@ -92,16 +93,16 @@
 </body>
 <script>
     //비동기식 아이디 중복확인
-    function idcheck(){
+    function idcheck() {
         let id = $("#id").val();
 
         $.ajax({
             type: 'POST',
             dataType: 'html',  //전송받은 데이터를 변환시킬 컨텐츠 타입
-            data: { id : id },
+            data: {id: id},
             url: '/member/idCheck.do',
             //통신 성공시
-            success:function(data) {
+            success: function (data) {
                 if (!id) return alert("아이디를 입력해주세요");
 
                 if (data == 'false') {
@@ -119,8 +120,9 @@
             }
         });
     }
+
     //정규식 이용한 이메일형식 확인
-    function CheckEmail(str){
+    function CheckEmail(str) {
         var reg_email = /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
         return reg_email.test(str);
     }
@@ -152,7 +154,7 @@
             document.getElementById("email").focus();
             return false;
 
-        //아이디 중복에 따른 결과 반환
+            //아이디 중복에 따른 결과 반환
         } else if (checkValue === "checked") {
             frmMember.method = "post";
             frmMember.action = "/01/SignUp.do"
